@@ -1,0 +1,14 @@
+services:
+  vault-bot:
+    build: .
+    container_name: vault-bot
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PORT: "8080"
+    ports:
+      - "8080:8080"          # health check + Razorpay webhook (optional)
+    stop_grace_period: 20s   # lets the bot close its HTTP sessions on shutdown
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
